@@ -8,12 +8,21 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
-@Data @NoArgsConstructor @AllArgsConstructor public class AppUser implements Serializable {
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class AppUser implements Serializable {
 
 		@Id
-		@SequenceGenerator(name = "user_sequence", sequenceName = "user_sequence", allocationSize = 1)
-		@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_sequence")
-		@Column(nullable = false, updatable = false) private Long userId;
+		@SequenceGenerator(
+				name = "user_sequence",
+				sequenceName = "user_sequence",
+				allocationSize = 1
+		)
+		@GeneratedValue(strategy= GenerationType.SEQUENCE,
+				generator = "user_sequence")
+		@Column(nullable = false, updatable = false)
+		private Long userId;
 		private String firstName;
 		private String lastName;
 		private String email;
@@ -26,7 +35,8 @@ import java.util.Date;
 		private Boolean isDisabled;
 		private Boolean isEnabled;
 		private Expense expense;
-		@Enumerated(EnumType.STRING) private AppUserRole appUserRole;
+		@Enumerated(EnumType.STRING)
+		private AppUserRole appUserRole;
 		private String[] permissions;
 
 }

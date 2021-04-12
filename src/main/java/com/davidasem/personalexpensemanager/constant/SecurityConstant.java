@@ -8,11 +8,8 @@ public class SecurityConstant {
 		public static final String TOKEN_ISSUER = "Intuition Personal Expense Manager";
 		public static final String PERMISSIONS = "Permissions";
 		public static final String FORBIDDEN_MESSAGE = "You need to log in to access this page";
-		public static final String ACCESS_DENIED_MESSAGE =
-				"You do not have permission to access this page";
+		public static final String ACCESS_DENIED_MESSAGE = "You do not have permission to access this page";
 		public static final String OPTIONS_HTTP_METHOD = "OPTIONS";
-		public static final String[] PUBLIC_URLS =
-				{"/api/v1/user/signup", "/api/v1/user/login", "/api/v1/user/resetpassword/**",
-						"/api/v1/user/image/**"};
+		public static final String[] PUBLIC_URLS ={"/api/v1/user/signup", "/api/v1/user/login", "/api/v1/user/resetpassword/**", "/api/v1/user/image/**"};
 
 }

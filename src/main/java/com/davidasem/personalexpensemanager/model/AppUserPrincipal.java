@@ -16,32 +16,39 @@ public class AppUserPrincipal implements UserDetails {
 				this.appUser = appUser;
 		}
 
-		@Override public Collection<? extends GrantedAuthority> getAuthorities() {
-				return stream(this.appUser.getPermissions()).map(SimpleGrantedAuthority::new)
-						.collect(Collectors.toList());
+		@Override
+		public Collection<? extends GrantedAuthority> getAuthorities() {
+				return stream(this.appUser.getPermissions())
+						.map(SimpleGrantedAuthority::new).collect(Collectors.toList());
 		}
 
-		@Override public String getPassword() {
+		@Override
+		public String getPassword() {
 				return this.appUser.getPassword();
 		}
 
-		@Override public String getUsername() {
+		@Override
+		public String getUsername() {
 				return this.appUser.getUsername();
 		}
 
-		@Override public boolean isAccountNonExpired() {
+		@Override
+		public boolean isAccountNonExpired() {
 				return true;
 		}
 
-		@Override public boolean isAccountNonLocked() {
+		@Override
+		public boolean isAccountNonLocked() {
 				return this.appUser.getIsDisabled();
 		}
 
-		@Override public boolean isCredentialsNonExpired() {
+		@Override
+		public boolean isCredentialsNonExpired() {
 				return true;
 		}
 
-		@Override public boolean isEnabled() {
+		@Override
+		public boolean isEnabled() {
 				return this.appUser.getIsEnabled();
 		}
 }

@@ -23,38 +23,35 @@ import java.util.stream.Collectors;
 
 import static java.util.Arrays.stream;
 
-@Component public class JWTGenerator {
+@Component
+public class JWTGenerator {
 
-		@Value("${jwt.secret}") private String secretKey;
+		@Value("${jwt.secret}")
+		private  String secretKey;
 
 		//generating token
-		public String generateJwtToken(AppUserPrincipal appUserPrincipal) {
-				String[] claims = getClaimsFromAppUser(appUserPrincipal);
-				return JWT.create().withIssuer(SecurityConstant.TOKEN_ISSUER).withIssuedAt(new Date())
-						.withSubject(appUserPrincipal.getUsername())
-						.withArrayClaim(SecurityConstant.PERMISSIONS, claims)
-						.withExpiresAt(new Date(System.currentTimeMillis() + SecurityConstant.EXPIRATION_TIME))
+		public String generateJwtToken(AppUserPrincipal appUserPrincipal){
+				String[]claims = getClaimsFromAppUser(appUserPrincipal);
+				return JWT.create().withIssuer(SecurityConstant.TOKEN_ISSUER).withIssuedAt(new Date()).withSubject(appUserPrincipal.getUsername())
+						.withArrayClaim(SecurityConstant.PERMISSIONS, claims).withExpiresAt(new Date(System.currentTimeMillis() + SecurityConstant.EXPIRATION_TIME))
 						.sign(Algorithm.HMAC512(secretKey.getBytes()));
 		}
 
 		//list of permissions from the tokens
-		public List<GrantedAuthority> getPermissions(String token) {
+		public List<GrantedAuthority> getPermissions(String token){
 				String[] claims = getClaimsFromToken(token);
 				return stream(claims).map(SimpleGrantedAuthority::new).collect(Collectors.toList());
 		}
 
-		public Authentication getAuthentication(String userName, List<GrantedAuthority> permissions,
-				HttpServletRequest request) {
-				UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
-						new UsernamePasswordAuthenticationToken(userName, permissions);
-				usernamePasswordAuthenticationToken
-						.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+		public Authentication getAuthentication(String userName, List<GrantedAuthority> permissions, HttpServletRequest request){
+				UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(userName, permissions);
+				usernamePasswordAuthenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 				return usernamePasswordAuthenticationToken;
 		}
 
 
 		//check if token is valid
-		public boolean isValidToken(String userName, String token) {
+		public boolean isValidToken(String userName, String token){
 				JWTVerifier verifier = getJWTVerifier();
 				return StringUtils.isNotEmpty(userName) && !isTokenExpired(verifier, token);
 		}
@@ -65,7 +62,7 @@ import static java.util.Arrays.stream;
 		}
 
 		//get subject and verify it
-		public String getSubject(String token) {
+		public String getSubject(String token){
 				JWTVerifier verifier = getJWTVerifier();
 				return verifier.verify(token).getSubject();
 		}
@@ -85,8 +82,9 @@ import static java.util.Arrays.stream;
 						Algorithm algo = Algorithm.HMAC512(secretKey);
 						verifier = JWT.require(algo).withIssuer(SecurityConstant.TOKEN_ISSUER).build();
 
-				} catch (JWTVerificationException exception) {
-						throw new JWTVerificationException(SecurityConstant.TOKEN_CANNOT_BE_VERIFIED);
+				}
+				catch (JWTVerificationException exception){
+						throw  new JWTVerificationException(SecurityConstant.TOKEN_CANNOT_BE_VERIFIED);
 				}
 
 				return verifier;
@@ -95,8 +93,8 @@ import static java.util.Arrays.stream;
 
 		//get all claims or permissions of the user
 		private String[] getClaimsFromAppUser(AppUserPrincipal appUser) {
-				List<String> permissions = new ArrayList<>();
-				for (GrantedAuthority grantedAuthority : appUser.getAuthorities()) {
+				List<String>permissions = new ArrayList<>();
+				for (GrantedAuthority grantedAuthority : appUser.getAuthorities()){
 						permissions.add(grantedAuthority.getAuthority());
 				}
 
