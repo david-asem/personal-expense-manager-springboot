@@ -8,26 +8,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
-
 import org.springframework.stereotype.Repository;
 
-@Repository
-public class AppUserDAOImpl extends BeanPropertyRowMapper implements AppUserDAO {
+@Repository public class AppUserDAOImpl extends BeanPropertyRowMapper implements AppUserDAO {
 
-		@Autowired
 		private static final Logger log = LoggerFactory.getLogger(AppUserDAOImpl.class);
 
-		@Autowired
 		private final JdbcTemplate jdbcTemplate;
 
 
-
-		public AppUserDAOImpl(JdbcTemplate jdbcTemplate) {
+		@Autowired public AppUserDAOImpl(JdbcTemplate jdbcTemplate) {
 				this.jdbcTemplate = jdbcTemplate;
 		}
 
-		@Override
-		public AppUser findUserByUsername(String username) {
+		@Override public AppUser findUserByUsername(String username) {
 				try {
 						String sql = "SELECT * FROM USER  WHERE username = ?";
 						return jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(AppUser.class), username);

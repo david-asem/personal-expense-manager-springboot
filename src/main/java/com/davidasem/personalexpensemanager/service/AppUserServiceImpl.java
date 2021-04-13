@@ -15,20 +15,15 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 
-@Service
-@Transactional
-@Qualifier("UserDetailsService")
-public class AppUserServiceImpl implements  AppUserService, UserDetailsService {
+@Service @Transactional @Qualifier("appUserDetailsService") public class AppUserServiceImpl
+		implements AppUserService, UserDetailsService {
 
-		private Logger logger = LoggerFactory.getLogger(getClass());
+		private final Logger logger = LoggerFactory.getLogger(getClass());
+		private final AppUserDAOImpl appUserDAO;
 
-		@Autowired
-		public AppUserServiceImpl(AppUserDAOImpl appUserDAO) {
+		@Autowired public AppUserServiceImpl(AppUserDAOImpl appUserDAO) {
 				this.appUserDAO = appUserDAO;
 		}
-
-
-		private AppUserDAOImpl appUserDAO;
 
 
 		//throws UsernameNotFoundException
