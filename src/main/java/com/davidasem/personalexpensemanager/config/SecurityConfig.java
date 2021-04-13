@@ -27,7 +27,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 		private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
 		private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
 		private final JwtAuthorizationFilter jwtAuthorizationFilter;
-		@Qualifier("appUserDetailsService") private final UserDetailsService userDetailsService;
+		@Qualifier("appUserDetailsService")
+		private final UserDetailsService userDetailsService;
 		private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
 

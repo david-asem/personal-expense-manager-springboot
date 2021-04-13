@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -34,7 +35,7 @@ public class AppUser implements Serializable {
 		private Date createdDate;
 		private Boolean isDisabled;
 		private Boolean isEnabled;
-		private Expense expense;
+		private Set<Expense> expense;
 		@Enumerated(EnumType.STRING)
 		private AppUserRole appUserRole;
 		private String[] permissions;
